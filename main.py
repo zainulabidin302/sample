@@ -5,11 +5,12 @@ import re
 import time
 import csv
 import sys
+import os
 
 
 async def main(query):
     print('will launch a browser')
-    browser = await launch()
+    browser = await launch({'args': ['--no-sandbox']})
     page = await browser.newPage()
     await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.162 Safari/537.36')
     print('visiting page')
@@ -67,12 +68,13 @@ async def main(query):
 #        csvwriter = csv.writer(f)
 #        for item in trending_list:
 #            csvwriter.writerow(list(item.values()))
-
+    if "DEBUG" in os.environ:
+        print(trending_list)
 
     with open('list.{}.txt'.format(query), 'w') as f:
         csvwriter = csv.writer(f)
         for item in trending_list:
-            if int(item['hour']) == 0 and int(item['min']) < 10:
+            if int(item['hour']) == 0 and int(item['min']) < 30:
                 csvwriter.writerow(list(item.values()))
 if (len(sys.argv) > 1): 
     query = sys.argv[1]

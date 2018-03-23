@@ -1,15 +1,24 @@
 var fs = require('fs'); 
-const CID = '553626331679955';
-const CSE = '8f24927beb8e10cbee7749014f875254'
-let uktn = 'EAACEdEose0cBANBCn09qky7g800OOhjruzz6aFZB5mS2SXHzNytbbdXvVtPlXyncIZAhspgwZCRUk7h68tZAvZBlJrZA1lY6TwVG8eTo5mEIZCHRZC68QUbMj0ITGAPqxigpFZCvdDxxBP4CZCE6LHvtuGognB6i5olV8fUbxcomqcH8y1xDriLqvGkUhfwnfBkAfZAynFa6LrQxwZDZD'
+const CID = '202716957156310';
+const CSE = '32e218a471c02e8108436952c9d5be3f'
+let uktn = 'EAACTn6mYk2QBANuGPiakuxjcVfoKCZCTjOA4yxs1zt6ZAXUhGVlhdPZCIDFufzQPfG7zraugL5OHzEATK2rBpdlnhOjQZB5Mne0MrbXcooavYSH4ultrZAW29m8ZBQZAymEfVVhlYdvKYXJZAYhZCd3aOPnqqn3kyM8flbZCMAXPqpRwaQ5oaxuH7yyhOheFodochlSTrp3xsrRw4oxeqgpYHH'
 
 
 var requests = require('request')
 
 var base_url = 'graph-video.facebook.com'
-var path_uri =  '/v2.12/webdevelopers101/videos?access_token='+uktn
 
-let videos_folder = '/home/neo/PycharmProjects/asyncio/'
+if(process.argv.length <= 3)
+{
+console.log(`usage: ${process.argv[1]} folder pageusername`);
+process.exit();
+
+}
+
+var path_uri =  `/v2.12/${process.argv[3]}/videos?access_token=`+uktn
+
+let videos_folder = process.argv[2];
+console.log(`scanning directory for mp4 files: ${videos_folder}`);
 let files = []
 let re = /.*.mp4$/
 _files = fs.readdirSync(videos_folder);
@@ -20,6 +29,7 @@ _files.forEach(file => {
 
 var uploadVideo = (videopath) => {
     let formData = {
+	
         source: fs.createReadStream(videopath),
     }
     let url = 'https://' + base_url + path_uri
@@ -28,6 +38,7 @@ var uploadVideo = (videopath) => {
         if (err) {
             console.log ('error:', err)
         } else {
+	
             console.log('post done')
             console.log(body)
         }
