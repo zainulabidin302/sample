@@ -7,14 +7,14 @@ import csv
 import sys
 
 
-async def main():
+async def main(query):
     print('will launch a browser')
     browser = await launch()
     page = await browser.newPage()
     await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.162 Safari/537.36')
     print('visiting page')
     # query = 'web development tutorials'
-    query = 'learn html and css'
+    
     await page.goto('https://www.youtube.com/results?search_query={}'.format(query))
     await asyncio.sleep(5.0)
     html = await page.content()
@@ -63,17 +63,18 @@ async def main():
             # print(item)
 
     # trending_list = list(set(ahrefs))
-    with open('list.{}.txt'.format(time.time()), 'w') as f:
-        csvwriter = csv.writer(f)
-        for item in trending_list:
-            csvwriter.writerow(list(item.values()))
+#    with open('list.{}.txt'.format(time.time()), 'w') as f:
+#        csvwriter = csv.writer(f)
+#        for item in trending_list:
+#            csvwriter.writerow(list(item.values()))
 
 
-    with open('list_less_then_10.{}.{}.txt'.format(query, time.time()), 'w') as f:
+    with open('list.{}.txt'.format(query), 'w') as f:
         csvwriter = csv.writer(f)
         for item in trending_list:
             if int(item['hour']) == 0 and int(item['min']) < 10:
                 csvwriter.writerow(list(item.values()))
-
-asyncio.get_event_loop().run_until_complete(main())
+if (len(sys.argv) > 1): 
+    query = sys.argv[1]
+    asyncio.get_event_loop().run_until_complete(main(query))
 
