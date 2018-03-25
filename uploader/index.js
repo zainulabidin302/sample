@@ -1,7 +1,7 @@
 var fs = require('fs'); 
 const CID = '202716957156310';
 const CSE = '32e218a471c02e8108436952c9d5be3f'
-let uktn = 'EAACEdEose0cBANIwJV3l7YrZACvpIMLzrWA4UGZBOylnF1B9rdbwVZCgjOAMQqM29mcBVB5QjiASEMmZCeUi8FrSWu3pMpiMKl1itvVCHuA9uihZCGw9YhOs0nqgXdhx5k4zvWHHBRbd78MTH0jGctzA1ggziOn8GWkpCREQxQuDBcKsjKDK8lRIeaQRwA2xke9MNymZATsAZDZD'
+let uktn = 'EAACEdEose0cBAGpCADVVC4qgM530SI0jua9oeCiba7aZAU8FUbvZATaZB3fcm7qxdXle4lEC1cJtb6iM0TxloDpFAVOq3IQ5fZC7ZCuwKS9dSbfIJMMZC7oxuNCZBXBezhKNiLERBrhUZB7ya6RBl1xHc7Vr9DBRuUupU55v5hGhDBE3u0OjpLiUezlGaz8WgOWkUDpJJnHGtgZDZD'
 
 
 var requests = require('request')
@@ -76,7 +76,6 @@ let uploadMessagePost = (video_id, title) => {
 
 
 
-files = [files[0]]
 files.forEach((file) => {
     console.log(`uploading ${file} \n`)
     uploadVideo(videos_folder + '/' +file, file.split('.')[0]);
